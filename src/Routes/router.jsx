@@ -2,6 +2,7 @@ import React from "react";
 
 import { createBrowserRouter } from "react-router-dom";
 import Main from "../Layout/Main";
+import Dashboard from "../pages/Dashboard/Dashboard";
 import Details from "../pages/Details/Details";
 import ErrorPage from "../pages/ErrorPage/ErrorPage";
 import Explore from "../pages/Explore/Explore";
@@ -32,7 +33,7 @@ const router = createBrowserRouter([
       },
       {
         path: "/dashboard",
-        element: <Explore />,
+        element: <Dashboard />,
       },
     ],
   },

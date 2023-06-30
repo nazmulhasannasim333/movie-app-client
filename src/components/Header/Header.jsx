@@ -6,7 +6,6 @@ import { NavLink, useLocation, useNavigate } from "react-router-dom";
 
 import "./style.scss";
 
-import logo from "../../assets/movix-logo.svg";
 import ContentWrapper from "../ContentWrapper/ContentWrapper";
 
 const Header = () => {
@@ -75,7 +74,7 @@ const Header = () => {
     <header className={`header ${mobileMenu ? "mobileView" : ""} ${show}`}>
       <ContentWrapper>
         <div className="logo" onClick={() => navigate("/")}>
-          <img src={logo} alt="" />
+          <h1 className="text-red-700 font-extrabold text-3xl ">FlixFilm</h1>
         </div>
       
         <ul className="menuItems">
@@ -114,9 +113,9 @@ const Header = () => {
               Dashboard
             </NavLink>
           </li>
-          {/* <li className="menuItem">
+          <li className=" searchMenu">
             <HiOutlineSearch onClick={openSearch} />
-          </li> */}
+          </li>
         </ul>
 
         <div className="mobileMenuItems">
