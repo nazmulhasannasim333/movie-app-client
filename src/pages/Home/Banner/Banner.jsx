@@ -34,7 +34,6 @@ const Banner = () => {
           <Img src={background} />
         </div>
       )}
-favourite
       <div className="opacity-layer"></div>
       <ContentWrapper>
         <div className="heroBannerContent">
