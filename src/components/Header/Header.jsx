@@ -2,10 +2,12 @@ import React, { useEffect, useState } from "react";
 import { HiOutlineSearch } from "react-icons/hi";
 import { SlMenu } from "react-icons/sl";
 import { VscChromeClose } from "react-icons/vsc";
-import { NavLink, useLocation, useNavigate } from "react-router-dom";
+import { Link, NavLink, useLocation, useNavigate } from "react-router-dom";
 
 import "./style.scss";
 
+import { toast } from "react-hot-toast";
+import useAuth from "../../hooks/useAuth";
 import ContentWrapper from "../ContentWrapper/ContentWrapper";
 
 const Header = () => {
@@ -16,6 +18,15 @@ const Header = () => {
   const [showSearch, setShowSearch] = useState("");
   const navigate = useNavigate();
   const location = useLocation();
+  const { user, logout } = useAuth();
+
+ 
+  const handleSignout = () => {
+    logout()
+    .then(() => {
+      toast.success('Successfully logout!')
+    })
+  }
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -46,7 +57,6 @@ const Header = () => {
       navigate(`/search/${query}`);
       setTimeout(() => {
         setShowSearch(false);
-       
       }, 1000);
     }
   };
@@ -76,17 +86,17 @@ const Header = () => {
         <div className="logo" onClick={() => navigate("/")}>
           <h1 className="text-red-700 font-extrabold text-3xl ">FlixFilm</h1>
         </div>
-      
+
         <ul className="menuItems">
-        <div className="hidden lg:block md:block">
-              <input
+          <div className="hidden lg:block md:block">
+            <input
               className="border-b border-gray-300 me-5 focus:border-gray-300 outline-none py-3 ps-2 lg:w-[350px] md:w-56 bg-black bg-opacity-0 text-white"
-                type="text"
-                placeholder="Search for a movie or tv show....."
-                onChange={(e) => setQuery(e.target.value)}
-                onKeyUp={searchQueryHandler}
-              />
-              </div>
+              type="text"
+              placeholder="Search for a movie or tv show....."
+              onChange={(e) => setQuery(e.target.value)}
+              onKeyUp={searchQueryHandler}
+            />
+          </div>
           <li className="menuItem" onClick={() => navigationHandler("movie")}>
             <NavLink
               to="/explore/movie"
@@ -96,7 +106,6 @@ const Header = () => {
             </NavLink>
           </li>
           <li className="menuItem" onClick={() => navigationHandler("tv")}>
-            
             <NavLink
               to="/explore/tv"
               className={({ isActive }) => (isActive ? "text-red-600" : "")}
@@ -104,8 +113,15 @@ const Header = () => {
               TV Shows
             </NavLink>
           </li>
-          <li className="menuItem" >
-            
+          <li className="menuItem">
+            <NavLink
+              to="/subscription"
+              className={({ isActive }) => (isActive ? "text-red-600" : "")}
+            >
+              Subscription
+            </NavLink>
+          </li>
+          <li className="menuItem">
             <NavLink
               to="/dashboard"
               className={({ isActive }) => (isActive ? "text-red-600" : "")}
@@ -113,7 +129,27 @@ const Header = () => {
               Dashboard
             </NavLink>
           </li>
-          <li className=" searchMenu">
+          {user ? (
+            <li className="menuItem">
+              <Link to="/login">
+                <button
+                  onClick={handleSignout}
+                  className="bg-gradient-to-r from-red-600 to-red-950 block mx-auto text-white text-sm uppercase rounded shadow-md px-6 py-2"
+                >
+                  Sign Out
+                </button>
+              </Link>
+            </li>
+          ) : (
+            <li className="menuItem">
+              <Link to="/login">
+                <button className="bg-gradient-to-r from-red-600 to-red-950 block mx-auto text-white text-sm uppercase rounded shadow-md px-6 py-2">
+                  Sign In
+                </button>
+              </Link>
+            </li>
+          )}
+          <li className="searchMenu">
             <HiOutlineSearch onClick={openSearch} />
           </li>
         </ul>

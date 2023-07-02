@@ -1,7 +1,7 @@
 import React, { useRef } from "react";
 import {
-    BsFillArrowLeftCircleFill,
-    BsFillArrowRightCircleFill,
+  BsFillArrowLeftCircleFill,
+  BsFillArrowRightCircleFill,
 } from "react-icons/bs";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
@@ -10,6 +10,8 @@ import moment from "moment/moment";
 import PosterFallback from "../../assets/no-poster.png";
 import ContentWrapper from "../ContentWrapper/ContentWrapper";
 // import Genres from "../genres/Genres";
+import Swal from "sweetalert2";
+import useAuth from "../../hooks/useAuth";
 import CircleRating from "../CircleRating/CircleRating";
 import Genres from "../Genres/Genres";
 import Img from "../LazyLoadImg/Img";
@@ -19,6 +21,7 @@ const Carousel = ({ data, loading, endpoint, title }) => {
   const carouselContainer = useRef();
   const { url } = useSelector((state) => state.tmdb);
   const navigate = useNavigate();
+  const {user} = useAuth()
 
   const navigation = (dir) => {
     const container = carouselContainer.current;
@@ -33,6 +36,27 @@ const Carousel = ({ data, loading, endpoint, title }) => {
       behavior: "smooth",
     });
   };
+
+
+const handleNavigate = (item) => {
+  if(user && user?.email){
+    navigate(`/${item.media_type || endpoint}/${item.id}`) 
+  }else {
+    Swal.fire({
+      title: "Please Login to watch movie",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Sign In",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        navigate("/login");
+      }
+    });
+  }
+}
+
 
   const skItem = () => {
     return (
@@ -68,9 +92,7 @@ const Carousel = ({ data, loading, endpoint, title }) => {
                 <div
                   key={item.id}
                   className="carouselItem"
-                  onClick={() =>
-                    navigate(`/${item.media_type || endpoint}/${item.id}`)
-                  }
+                  onClick={() => handleNavigate(item) }
                 >
                   <div className="posterBlock">
                     <Img src={posterUrl} />

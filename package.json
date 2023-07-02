@@ -19,6 +19,8 @@
     "react": "^18.2.0",
     "react-circular-progressbar": "^2.1.0",
     "react-dom": "^18.2.0",
+    "react-hook-form": "^7.45.1",
+    "react-hot-toast": "^2.4.1",
     "react-icons": "^4.10.1",
     "react-infinite-scroll-component": "^6.1.0",
     "react-lazy-load-image-component": "^1.6.0",
@@ -28,6 +30,7 @@
     "react-select": "^5.7.3",
     "sass": "^1.57.1",
     "sort-by": "^1.2.0",
+    "sweetalert2": "^11.7.12",
     "swiper": "^9.4.1"
   },
   "devDependencies": {

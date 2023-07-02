@@ -10,6 +10,7 @@ import Home from "../pages/Home/Home/Home";
 import Login from "../pages/Login/Login";
 import SearchResult from "../pages/SearchResult/SearchResult";
 import Signup from "../pages/Signup/Signup";
+import Subscription from "../pages/Subscription/Subscription";
 
 const router = createBrowserRouter([
   {
@@ -44,6 +45,10 @@ const router = createBrowserRouter([
       {
         path: "/signup",
         element: <Signup />,
+      },
+      {
+        path: "/subscription",
+        element: <Subscription />,
       },
     ],
   },
