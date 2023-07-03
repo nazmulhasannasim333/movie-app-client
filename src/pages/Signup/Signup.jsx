@@ -1,7 +1,9 @@
+import axios from 'axios';
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { FaGithub, FaGoogle } from "react-icons/fa";
+import { toast } from 'react-hot-toast';
 import { Link, useNavigate } from 'react-router-dom';
+import SocialLogin from '../../components/SocialLogin/SocialLogin';
 import useAuth from '../../hooks/useAuth';
 
 const Signup = () => {
@@ -18,11 +20,29 @@ const Signup = () => {
 
   const onSubmit = (data) => {
     console.log(data);
+
+    axios.post(`http://localhost:5000/users`, {
+      name: data.name,
+      email: data.email,
+      photo: "",
+      date: new Date()
+    })
+    .then(res => {
+      console.log(res.data);
+      if(res.data.insertedId){
+        navigate("/")
+        toast.success('Welcome to FlixFilm')
+      }
+    })
+    .catch(err => {
+      console.log(err);
+    })
+
+    setShowError("")
     createUser(data.email, data.password)
     .then(result => {
       const signUpUser = result.user;
       console.log(signUpUser);
-      navigate("/")
       profileUpdate(data.name, data.photo)
       .then(()=> {
         console.log("profile updated");
@@ -42,16 +62,7 @@ const Signup = () => {
         <div className='min-h-[700px] pt-[150px] pb-20 lg:px-0 px-4'>
             <div className="max-w-md mx-auto bg-slate-900 shadow-xl rounded pt-10">
         <div className="text-center text-white py-4 text-md">Sign in with</div>
-        <div className="flex justify-center mb-8">
-          <button className="flex items-center bg-[black3] shadow-md border border-gray-600 rounded px-4 py-2 mr-2">
-            <FaGoogle className='text-xl text-green-600 me-3' />
-            <div className="text-white">Google</div>
-          </button>
-          <button className="flex items-center bg-[black3] shadow-md border border-gray-600 rounded px-4 py-2 mr-2">
-          <FaGithub className='text-xl text-gray-500 me-3' />
-            <div className="text-white">GitHub</div>
-          </button>
-        </div>
+      <SocialLogin />
         <div className="bg-slate-900 pt-8 pb-16">
           <div className="text-center text-white mb-7 text-md">Or SignUp with Email &amp; Password</div>
           <form onSubmit={handleSubmit(onSubmit)}>

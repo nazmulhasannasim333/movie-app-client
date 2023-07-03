@@ -3,6 +3,9 @@ import React from "react";
 import { createBrowserRouter } from "react-router-dom";
 import Main from "../Layout/Main";
 import Dashboard from "../pages/Dashboard/Dashboard";
+import FavoriteVideos from "../pages/Dashboard/UserDashboard/FavoriteVideos";
+import UserHome from "../pages/Dashboard/UserDashboard/UserHome";
+import WatchLater from "../pages/Dashboard/UserDashboard/WatchLater";
 import Details from "../pages/Details/Details";
 import ErrorPage from "../pages/ErrorPage/ErrorPage";
 import Explore from "../pages/Explore/Explore";
@@ -11,6 +14,7 @@ import Login from "../pages/Login/Login";
 import SearchResult from "../pages/SearchResult/SearchResult";
 import Signup from "../pages/Signup/Signup";
 import Subscription from "../pages/Subscription/Subscription";
+import PrivateRoute from "./PrivateRoute";
 
 const router = createBrowserRouter([
   {
@@ -24,7 +28,7 @@ const router = createBrowserRouter([
       },
       {
         path: "/:mediaType/:id",
-        element: <Details />,
+        element: <PrivateRoute><Details /></PrivateRoute>,
       },
       {
         path: "/search/:query",
@@ -33,10 +37,6 @@ const router = createBrowserRouter([
       {
         path: "/explore/:mediaType",
         element: <Explore />,
-      },
-      {
-        path: "/dashboard",
-        element: <Dashboard />,
       },
       {
         path: "/login",
@@ -51,6 +51,24 @@ const router = createBrowserRouter([
         element: <Subscription />,
       },
     ],
+  },
+  {
+    path: "/dashboard",
+    element: <Dashboard />,
+    children: [
+      {
+        path: 'userhome',
+        element: <UserHome />
+      },
+      {
+        path: 'favoritevideos',
+        element: <FavoriteVideos />
+      },
+      {
+        path: 'watchlater',
+        element: <WatchLater />
+      },
+    ]
   },
 ]);
 

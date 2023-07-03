@@ -6,7 +6,10 @@ import { Link, NavLink, useLocation, useNavigate } from "react-router-dom";
 
 import "./style.scss";
 
+import { Avatar } from "@mui/material";
+import axios from "axios";
 import { toast } from "react-hot-toast";
+import { FaUserCircle } from "react-icons/fa";
 import useAuth from "../../hooks/useAuth";
 import ContentWrapper from "../ContentWrapper/ContentWrapper";
 
@@ -19,6 +22,7 @@ const Header = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const { user, logout } = useAuth();
+  const [userProfile, setUserProfile] = useState({})
 
  
   const handleSignout = () => {
@@ -80,6 +84,17 @@ const Header = () => {
     setMobileMenu(false);
   };
 
+
+  useEffect(() => {
+    if(user){
+      axios.get(`http://localhost:5000/userprofile/${user?.email}`)
+      .then(res => {
+        console.log(res.data);
+        setUserProfile(res.data)
+      })
+    }
+  },[user])
+
   return (
     <header className={`header ${mobileMenu ? "mobileView" : ""} ${show}`}>
       <ContentWrapper>
@@ -122,16 +137,22 @@ const Header = () => {
             </NavLink>
           </li>
           <li className="menuItem">
-            <NavLink
-              to="/dashboard"
-              className={({ isActive }) => (isActive ? "text-red-600" : "")}
+            <Link
+              to="/dashboard/userhome"
             >
               Dashboard
-            </NavLink>
+            </Link>
           </li>
+         {
+          user &&  <li className="menuItem">
+          {
+            user && userProfile.photo ? <Avatar alt="photo" title={userProfile?.name} src={userProfile?.photo && userProfile?.photo} /> : <FaUserCircle className="text-2xl" />
+          }
+          </li>
+         }
           {user ? (
             <li className="menuItem">
-              <Link to="/login">
+              <Link >
                 <button
                   onClick={handleSignout}
                   className="bg-gradient-to-r from-red-600 to-red-950 block mx-auto text-white text-sm uppercase rounded shadow-md px-6 py-2"

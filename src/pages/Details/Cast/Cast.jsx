@@ -8,7 +8,7 @@ import { useSelector } from "react-redux";
 
 import "./style.scss";
 
-import avatar from "../../../assets/fallbacks-image-man.jpg";
+import avatar from "../../../assets/avatar.png";
 import ContentWrapper from "../../../components/ContentWrapper/ContentWrapper";
 import Img from "../../../components/LazyLoadImg/Img";
 

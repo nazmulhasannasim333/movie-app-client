@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
-import { FaGithub } from "react-icons/fa";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import google from "../../assets/google.png";
+
+import SocialLogin from "../../components/SocialLogin/SocialLogin";
 import useAuth from "../../hooks/useAuth";
 
 const Login = () => {
@@ -22,6 +22,7 @@ const Login = () => {
 
   const onSubmit = (data) => {
     console.log(data);
+
     setShowError("");
     loginUser(data.email, data.password)
       .then((result) => {
@@ -40,16 +41,7 @@ const Login = () => {
     <div className="min-h-[700px] pt-[150px] pb-20 lg:px-0 px-4">
       <div className="max-w-md mx-auto bg-slate-900 shadow-xl rounded pt-10">
         <div className="text-center text-white py-4 text-md">Sign in with</div>
-        <div className="flex justify-center mb-8">
-          <button className="flex items-center bg-[black3] shadow-md border border-gray-600 rounded px-4 py-2 mr-2">
-            <img src={google} className="h-5 w-5 me-2" alt="" />
-            <div className="text-white">Google</div>
-          </button>
-          <button className="flex items-center bg-[black3] shadow-md border border-gray-600 rounded px-4 py-2 mr-2">
-            <FaGithub className="text-xl text-gray-500 me-3" />
-            <div className="text-white">GitHub</div>
-          </button>
-        </div>
+        <SocialLogin />
         <div className="bg-slate-900 pt-8 pb-16">
           <div className="text-center text-white mb-7 text-md">
             Or Sign in with Email &amp; Password
@@ -103,7 +95,6 @@ const Login = () => {
               <button className="bg-gradient-to-r from-red-600 to-slate-950 block mx-auto text-white text-sm uppercase rounded shadow-md px-6 py-2">
                 Sign in
               </button>
-              
             </div>
           </form>
           <p className="text-center text-red-500 pt-5">
