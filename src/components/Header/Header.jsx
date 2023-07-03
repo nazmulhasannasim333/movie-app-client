@@ -9,7 +9,6 @@ import "./style.scss";
 import { Avatar } from "@mui/material";
 import axios from "axios";
 import { toast } from "react-hot-toast";
-import { FaUserCircle } from "react-icons/fa";
 import useAuth from "../../hooks/useAuth";
 import ContentWrapper from "../ContentWrapper/ContentWrapper";
 
@@ -146,7 +145,7 @@ const Header = () => {
          {
           user &&  <li className="menuItem">
           {
-            user && userProfile.photo ? <Avatar alt="photo" title={userProfile?.name} src={userProfile?.photo && userProfile?.photo} /> : <FaUserCircle className="text-2xl" />
+            user && <Avatar alt="photo" title={userProfile?.name} src={userProfile?.photo ? userProfile?.photo : "https://cdn5.vectorstock.com/i/1000x1000/37/29/male-user-circle-icon-black-avatar-icon-user-vector-22753729.jpg"} />
           }
           </li>
          }
