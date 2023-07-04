@@ -31,6 +31,7 @@
     "react-infinite-scroll-component": "^6.1.0",
     "react-lazy-load-image-component": "^1.6.0",
     "react-loader-spinner": "^5.3.4",
+    "react-medium-image-zoom": "^5.1.6",
     "react-player": "^2.12.0",
     "react-redux": "^8.1.1",
     "react-router-dom": "^6.14.0",

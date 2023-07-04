@@ -2,9 +2,10 @@ import React from "react";
 
 import { createBrowserRouter } from "react-router-dom";
 import Main from "../Layout/Main";
+import UserProfile from "../components/UserProfile/UserProfile";
+import UserProfileUpdate from "../components/UserProfileUpdate/UserProfileUpdate";
 import Dashboard from "../pages/Dashboard/Dashboard";
 import FavoriteVideos from "../pages/Dashboard/UserDashboard/FavoriteVideos";
-import UserHome from "../pages/Dashboard/UserDashboard/UserHome";
 import WatchLater from "../pages/Dashboard/UserDashboard/WatchLater";
 import Details from "../pages/Details/Details";
 import ErrorPage from "../pages/ErrorPage/ErrorPage";
@@ -57,16 +58,22 @@ const router = createBrowserRouter([
     element: <Dashboard />,
     children: [
       {
-        path: 'userhome',
-        element: <UserHome />
-      },
-      {
         path: 'favoritevideos',
         element: <FavoriteVideos />
       },
       {
         path: 'watchlater',
         element: <WatchLater />
+      },
+      {
+        path: 'userprofile',
+        element: <UserProfile />
+      },
+      // update profile
+      {
+        path: 'updateProfile/:id',
+        element: <UserProfileUpdate />,
+        loader: ({params})=> fetch(`http://localhost:5000/getprofileinfo/${params.id}`)
       },
     ]
   },

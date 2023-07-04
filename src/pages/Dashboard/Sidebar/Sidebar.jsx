@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { FaHeart, FaHome, FaStopwatch } from "react-icons/fa";
+import { FaHeart, FaStopwatch, FaUser } from "react-icons/fa";
 import { Link, NavLink, Outlet } from "react-router-dom";
 import control from "../../../assets/control.png";
 import logo from "../../../assets/logo.png";
@@ -20,7 +20,7 @@ const Sidebar = () => {
              border-2 rounded-full  ${!open && "rotate-180"}`}
           onClick={() => setOpen(!open)}
         />
-        <Link to="/"><div className="flex gap-x-4 items-center border-b pb-10">
+        <Link to="/"><div className="flex gap-x-4 items-center mb-20">
           <img
             src={logo}
             className={`cursor-pointer duration-500 h-12 w-12 ${
@@ -37,20 +37,20 @@ const Sidebar = () => {
         </div></Link>
         <ul className="pt-6">
           <li
-            className={`  rounded-md p-2 cursor-pointer text-white text-sm items-center gap-x-4 
+            className={`  rounded-md p-2 cursor-pointer text-white text-sm border-b pb-5 items-center gap-x-4 
                 `}
           >
             <NavLink
-              to="/dashboard/userhome"
+              to="/dashboard/userprofile"
               className={ ({ isActive }) => (isActive && open ? " bg-gradient-to-r from-red-600 p-2 to-red-950 rounded-md flex items-center gap-3" : "flex items-center gap-3")}
             >
-              <FaHome className="text-2xl" />
+              <FaUser className="text-2xl" />
               <span
                 className={`${
                   !open && "hidden"
                 } origin-left duration-200 text-xl`}
               >
-                Home
+                Profile
               </span>
             </NavLink>
           </li>
@@ -60,7 +60,7 @@ const Sidebar = () => {
           >
             <NavLink
               to="/dashboard/favoritevideos"
-              className={ ({ isActive }) => (isActive && open ? " bg-gradient-to-r from-red-600 p-2 to-red-950 p-2 rounded-md flex items-center gap-3" : "flex items-center gap-3")}
+              className={ ({ isActive }) => (isActive && open ? " bg-gradient-to-r from-red-600 p-2 to-red-950  rounded-md flex items-center gap-3" : "flex items-center gap-3")}
             >
               <FaHeart className="text-2xl"  />
               <span
@@ -78,7 +78,7 @@ const Sidebar = () => {
           >
             <NavLink
               to="/dashboard/watchlater"
-              className={ ({ isActive }) => (isActive && open ? " bg-gradient-to-r from-red-600 p-2 to-red-950 p-2 rounded-md flex items-center gap-3" : "flex items-center gap-3")}
+              className={ ({ isActive }) => (isActive && open ? " bg-gradient-to-r from-red-600 p-2 to-red-950  rounded-md flex items-center gap-3" : "flex items-center gap-3")}
             >
               <FaStopwatch className="text-2xl"  />
               <span

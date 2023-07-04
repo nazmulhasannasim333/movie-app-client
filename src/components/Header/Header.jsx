@@ -137,16 +137,18 @@ const Header = () => {
           </li>
           <li className="menuItem">
             <Link
-              to="/dashboard/userhome"
+              to="/dashboard/userprofile"
             >
               Dashboard
             </Link>
           </li>
          {
           user &&  <li className="menuItem">
+          <Link to="/dashboard/userprofile">
           {
             user && <Avatar alt="photo" title={userProfile?.name} src={userProfile?.photo ? userProfile?.photo : "https://cdn5.vectorstock.com/i/1000x1000/37/29/male-user-circle-icon-black-avatar-icon-user-vector-22753729.jpg"} />
           }
+          </Link>
           </li>
          }
           {user ? (
