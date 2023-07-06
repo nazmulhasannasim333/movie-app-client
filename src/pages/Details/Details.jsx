@@ -6,7 +6,6 @@ import DetailsBanner from './DetailsBanner/DetailsBanner';
 import Recommendations from './Recommendations/Recommendations';
 import Similar from './Similar/Similar';
 import VideosSection from './VideoSection/VideoSection';
-import './style.scss';
 
 const Details = () => {
     const {mediaType, id} = useParams();

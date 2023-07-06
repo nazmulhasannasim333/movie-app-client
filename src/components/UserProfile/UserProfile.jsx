@@ -5,6 +5,7 @@ import { FaCalendarAlt } from "react-icons/fa";
 import Zoom from "react-medium-image-zoom";
 import "react-medium-image-zoom/dist/styles.css";
 import { Link } from "react-router-dom";
+import useAdmin from "../../hooks/useAdmin";
 import useAuth from "../../hooks/useAuth";
 
 const UserProfile = () => {
@@ -23,8 +24,7 @@ const UserProfile = () => {
   }, [user]);
   console.log(userProfile);
 
-  const isAdmin = false;
-  const student = true;
+  const [isAdmin] = useAdmin();
 
   return (
     <div className="h-screen flex-1 p-7">
@@ -89,8 +89,8 @@ const UserProfile = () => {
                       Admin
                     </div>
                   ) : (
-                    <div className="absolute top-0 left-44 text-xs bg-purple-600 py-0 px-1 rounded-md">
-                     {userProfile.photo ? "User" : "New User"}
+                    <div className="absolute top-0 left-44 text-xs bg-blue-700 py-0 px-1 rounded-md">
+                     {userProfile.photo ? "Verified" : "New User"}
                     </div>
                   )}
                 </h2>

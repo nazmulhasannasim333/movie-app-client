@@ -4,13 +4,18 @@ import { useParams } from "react-router-dom";
 import PosterFallback from "../../../assets/no-poster.png";
 import "./style.scss";
 
+import axios from "axios";
 import moment from "moment";
+import { toast } from "react-hot-toast";
+import { BiListPlus } from "react-icons/bi";
+import { FaHeart } from "react-icons/fa";
 import { useSelector } from "react-redux";
 import CircleRating from "../../../components/CircleRating/CircleRating";
 import ContentWrapper from "../../../components/ContentWrapper/ContentWrapper";
 import Genres from "../../../components/Genres/Genres";
 import Img from "../../../components/LazyLoadImg/Img";
 import VideoPopup from "../../../components/VideoPopup/VideoPopup";
+import useAuth from "../../../hooks/useAuth";
 import useFetch from "../../../hooks/useFetch";
 import { PlayIcon } from "../Playbtn";
 
@@ -20,8 +25,77 @@ const DetailsBanner = ({ video, crew }) => {
   const { mediaType, id } = useParams();
   const { data, loading } = useFetch(`/${mediaType}/${id}`);
   const { url } = useSelector((state) => state.tmdb);
-//   console.log(url);
-//   console.log(data);
+  const {user} = useAuth()
+  console.log(data);
+
+  const handleFavorite = (favorite) => {
+    const {
+      adult,
+      title,
+      name,
+    backdrop_path,
+    first_air_date,
+    id,
+    poster_path,
+    vote_average
+    } = favorite;
+   
+    axios.post(`http://localhost:5000/favorite`, {
+      email: user?.email,
+      adult,
+      title,
+      name,
+      backdrop_path: backdrop_path,
+      first_air_date,
+      id,
+      poster_path: poster_path,
+      vote_average
+    })
+    .then(res => {
+      console.log(res.data);
+      if(res.data.insertedId){
+        toast.success("added to favorite")
+      }
+      else{
+        toast.error("This movie already added to your favorite collection")
+      }
+    })
+  }
+
+  
+  const handleSave = (saveMovie) => {
+    const {
+      adult,
+      title,
+      name,
+    backdrop_path,
+    first_air_date,
+    id,
+    poster_path,
+    vote_average
+    } = saveMovie;
+   
+    axios.post(`http://localhost:5000/save`, {
+      email: user?.email,
+      adult,
+      title,
+      name,
+      backdrop_path: backdrop_path,
+      first_air_date,
+      id,
+      poster_path: poster_path,
+      vote_average
+    })
+    .then(res => {
+      console.log(res.data);
+      if(res.data.insertedId){
+        toast.success("added to watch later")
+      }
+      else{
+        toast.error("This movie already added to your watch later collection")
+      }
+    })
+  }
 
 const _genres = data?.genres?.map((g) => g.id);
 
@@ -80,6 +154,10 @@ const writer = crew?.filter(
                         <PlayIcon />
                         <span className="text">Watch Trailer</span>
                       </div>
+                      <button onClick={() => handleFavorite(data)} title="favorite">
+                      <FaHeart className="text-2xl text-red-800" />
+                      </button>
+                      <button onClick={() => handleSave(data)} title="Save"><BiListPlus className="text-3xl text-purple-600 bg-slate-200 rounded-sm" /></button>
                     </div>
 
                     <div className="overview">

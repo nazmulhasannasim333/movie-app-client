@@ -9,6 +9,7 @@ import "./style.scss";
 import { Avatar } from "@mui/material";
 import axios from "axios";
 import { toast } from "react-hot-toast";
+import useAdmin from "../../hooks/useAdmin";
 import useAuth from "../../hooks/useAuth";
 import ContentWrapper from "../ContentWrapper/ContentWrapper";
 
@@ -88,11 +89,16 @@ const Header = () => {
     if(user){
       axios.get(`http://localhost:5000/userprofile/${user?.email}`)
       .then(res => {
-        console.log(res.data);
+        // console.log(res.data);
         setUserProfile(res.data)
       })
     }
   },[user])
+
+  
+const [isAdmin] = useAdmin();
+console.log(isAdmin);
+
 
   return (
     <header className={`header ${mobileMenu ? "mobileView" : ""} ${show}`}>
@@ -104,7 +110,7 @@ const Header = () => {
         <ul className="menuItems">
           <div className="hidden lg:block md:block">
             <input
-              className="border-b border-gray-300 me-5 focus:border-gray-300 outline-none py-3 ps-2 lg:w-[350px] md:w-56 bg-black bg-opacity-0 text-white"
+              className="border-b border-gray-300 mx-5 focus:border-gray-300 outline-none py-3 ps-2 lg:w-[350px] md:w-56 bg-black bg-opacity-0 text-white"
               type="text"
               placeholder="Search for a movie or tv show....."
               onChange={(e) => setQuery(e.target.value)}
@@ -135,13 +141,15 @@ const Header = () => {
               Subscription
             </NavLink>
           </li>
-          <li className="menuItem">
+          {
+            user && <li className="menuItem">
             <Link
-              to="/dashboard/userprofile"
+              to={isAdmin ? "/dashboard/adminhome" : "/dashboard/favoritevideos"}
             >
               Dashboard
             </Link>
           </li>
+          }
          {
           user &&  <li className="menuItem">
           <Link to="/dashboard/userprofile">

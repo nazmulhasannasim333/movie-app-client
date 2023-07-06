@@ -1,10 +1,24 @@
 /* eslint-disable react/no-unescaped-entities */
 import React from "react";
 import { FaCheck } from "react-icons/fa";
+import { useNavigate } from "react-router-dom";
 import ContentWrapper from "../../components/ContentWrapper/ContentWrapper";
+import useAuth from "../../hooks/useAuth";
 import './style.scss';
 
 const Subscription = () => {
+  const {user} = useAuth()
+  const navigate = useNavigate()
+
+const handlePayment = () => {
+  if(user){
+    "user"
+  }else{
+    navigate("/login")
+  }
+}
+
+
   return (
     <div className="subscriptionPage">
      <ContentWrapper>
@@ -101,7 +115,7 @@ const Subscription = () => {
           ✖
           </span>Available 4K
         </p>
-        <button className="flex items-center mt-auto text-white bg-gradient-to-r from-red-600 to-red-950 hover:from-green-500 hover:to-yellow-800 border-0 py-2 px-4 w-full focus:outline-none rounded">GET STARED
+        <button disabled onClick={handlePayment} className="flex items-center mt-auto text-white bg-gradient-to-r from-red-600 to-red-950 hover:from-green-500 hover:to-yellow-800 border-0 py-2 px-4 w-full focus:outline-none rounded">GET STARED
           <svg fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} className="w-4 h-4 ml-auto" viewBox="0 0 24 24">
             <path d="M5 12h14M12 5l7 7-7 7" />
           </svg>
@@ -147,7 +161,7 @@ const Subscription = () => {
           <FaCheck />
           </span>Available 4K
         </p>
-        <button className="flex items-center mt-auto text-white bg-gradient-to-r from-red-600 to-red-950 hover:from-green-500 hover:to-yellow-800 border-0 py-2 px-4 w-full focus:outline-none rounded">GET STARED
+        <button  className="flex items-center mt-auto text-white bg-gradient-to-r from-red-600 to-red-950 hover:from-green-500 hover:to-yellow-800 border-0 py-2 px-4 w-full focus:outline-none rounded">GET STARED
           <svg fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} className="w-4 h-4 ml-auto" viewBox="0 0 24 24">
             <path d="M5 12h14M12 5l7 7-7 7" />
           </svg>

@@ -43,7 +43,9 @@ const Footer = () => {
                     <li className="menuItem">Blog</li>
                     <li className="menuItem">FAQ</li>
                 </ul>
+                
             </ContentWrapper>
+            <p className="text-center border-t pt-6 lg:mx-64 mx-8 text-sm lg:mb-0 mb-4">©{new Date().getFullYear()} Copyright All right reserved by FlixFilm LTD -- @Nasim</p>
         </footer>
     );
 };

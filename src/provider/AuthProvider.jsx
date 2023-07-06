@@ -1,3 +1,4 @@
+import axios from "axios";
 import { GoogleAuthProvider, createUserWithEmailAndPassword, getAuth, onAuthStateChanged, signInWithEmailAndPassword, signInWithPopup, signOut, updateProfile } from "firebase/auth";
 import React, { createContext, useEffect, useState } from 'react';
 import app from "../firebase/firebase.config";
@@ -32,16 +33,16 @@ const AuthProvider = ({children}) => {
         const unsubscribe = onAuthStateChanged(auth, currentUser => {
           setUser(currentUser)
           setLoading(false);
-        //   if(currentUser){
-        //     axios.post(`https://teaching-server.vercel.app/jwt`, {email: currentUser.email})
-        //     .then(data => {
-        //         localStorage.setItem("access-token", data.data.token)
-        //         setLoading(false);
-        //     })
-        //   }
-        //   else{
-        //     localStorage.removeItem("access-token")
-        //   }
+          if(currentUser){
+            axios.post(`http://localhost:5000/jwt`, {email: currentUser.email})
+            .then(data => {
+                localStorage.setItem("access-token", data.data.token)
+                setLoading(false);
+            })
+          }
+          else{
+            localStorage.removeItem("access-token")
+          }
          
          })
          return () => {

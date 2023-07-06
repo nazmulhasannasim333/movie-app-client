@@ -1,11 +1,16 @@
 import React, { useState } from "react";
-import { FaHeart, FaStopwatch, FaUser } from "react-icons/fa";
+import { BiListPlus } from "react-icons/bi";
+import { FaHeart, FaHome, FaUser, FaUsers } from "react-icons/fa";
 import { Link, NavLink, Outlet } from "react-router-dom";
 import control from "../../../assets/control.png";
 import logo from "../../../assets/logo.png";
+import useAdmin from "../../../hooks/useAdmin";
 
 const Sidebar = () => {
   const [open, setOpen] = useState(true);
+
+  // TODO: do it by data faching
+  const [isAdmin] = useAdmin();
 
   return (
     <div className="flex">
@@ -54,7 +59,48 @@ const Sidebar = () => {
               </span>
             </NavLink>
           </li>
+          {
+            isAdmin ?
+            <>
+            <li
+            className={`  rounded-md p-2 my-2 cursor-pointer text-white text-sm items-center gap-x-4 
+                `}
+          >
+            <NavLink
+              to="/dashboard/adminhome"
+              className={ ({ isActive }) => (isActive && open ? " bg-gradient-to-r from-red-600 p-2 to-red-950  rounded-md flex items-center gap-3" : "flex items-center gap-3")}
+            >
+              <FaHome className="text-2xl"  />
+              <span
+                className={`${
+                  !open && "hidden"
+                } origin-left duration-200 text-xl`}
+              >
+                Admin Home
+              </span>
+            </NavLink>
+          </li>
           <li
+            className={`  rounded-md p-2 cursor-pointer text-white text-sm items-center gap-x-4 
+                `}
+          >
+            <NavLink
+              to="/dashboard/manageusers"
+              className={ ({ isActive }) => (isActive && open ? " bg-gradient-to-r from-red-600 p-2 to-red-950  rounded-md flex items-center gap-3" : "flex items-center gap-3")}
+            >
+              <FaUsers className="text-2xl"  />
+              <span
+                className={`${
+                  !open && "hidden"
+                } origin-left duration-200 text-xl`}
+              >
+                Manage Users
+              </span>
+            </NavLink>
+          </li>
+            </>
+            : <>
+            <li
             className={`  rounded-md p-2 my-2 cursor-pointer text-white text-sm items-center gap-x-4 
                 `}
           >
@@ -80,7 +126,7 @@ const Sidebar = () => {
               to="/dashboard/watchlater"
               className={ ({ isActive }) => (isActive && open ? " bg-gradient-to-r from-red-600 p-2 to-red-950  rounded-md flex items-center gap-3" : "flex items-center gap-3")}
             >
-              <FaStopwatch className="text-2xl"  />
+              <BiListPlus className="text-3xl"  />
               <span
                 className={`${
                   !open && "hidden"
@@ -90,6 +136,8 @@ const Sidebar = () => {
               </span>
             </NavLink>
           </li>
+            </>
+          }
         </ul>
       </div>
       <Outlet />

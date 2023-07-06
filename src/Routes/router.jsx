@@ -4,6 +4,8 @@ import { createBrowserRouter } from "react-router-dom";
 import Main from "../Layout/Main";
 import UserProfile from "../components/UserProfile/UserProfile";
 import UserProfileUpdate from "../components/UserProfileUpdate/UserProfileUpdate";
+import AdminHome from "../pages/Dashboard/AdminDashboard/AdminHome/AdminHome";
+import ManageUsers from "../pages/Dashboard/AdminDashboard/ManageUsers/ManageUsers";
 import Dashboard from "../pages/Dashboard/Dashboard";
 import FavoriteVideos from "../pages/Dashboard/UserDashboard/FavoriteVideos";
 import WatchLater from "../pages/Dashboard/UserDashboard/WatchLater";
@@ -55,7 +57,7 @@ const router = createBrowserRouter([
   },
   {
     path: "/dashboard",
-    element: <Dashboard />,
+    element: <PrivateRoute><Dashboard /></PrivateRoute>,
     children: [
       {
         path: 'favoritevideos',
@@ -64,6 +66,14 @@ const router = createBrowserRouter([
       {
         path: 'watchlater',
         element: <WatchLater />
+      },
+      {
+        path: 'adminhome',
+        element: <AdminHome />
+      },
+      {
+        path: 'manageusers',
+        element: <ManageUsers />
       },
       {
         path: 'userprofile',
