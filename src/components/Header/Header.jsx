@@ -164,7 +164,7 @@ console.log(isAdmin);
               <Link >
                 <button
                   onClick={handleSignout}
-                  className="bg-gradient-to-r from-red-600 to-red-950 block mx-auto text-white text-sm uppercase rounded shadow-md px-6 py-2"
+                  className="bg-gradient-to-r from-red-600 to-red-950 hover:from-pink-500 hover:to-yellow-500 block mx-auto text-white text-sm uppercase rounded shadow-md px-6 py-2"
                 >
                   Sign Out
                 </button>
@@ -173,7 +173,7 @@ console.log(isAdmin);
           ) : (
             <li className="menuItem">
               <Link to="/login">
-                <button className="bg-gradient-to-r from-red-600 to-red-950 block mx-auto text-white text-sm uppercase rounded shadow-md px-6 py-2">
+                <button className="bg-gradient-to-r from-red-600 to-red-950 hover:from-pink-500 hover:to-yellow-500 block mx-auto text-white text-sm uppercase rounded shadow-md px-6 py-2">
                   Sign In
                 </button>
               </Link>

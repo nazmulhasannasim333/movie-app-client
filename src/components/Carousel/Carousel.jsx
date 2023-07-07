@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import {
   BsFillArrowLeftCircleFill,
   BsFillArrowRightCircleFill,
@@ -10,6 +10,7 @@ import moment from "moment/moment";
 import PosterFallback from "../../assets/no-poster.png";
 import ContentWrapper from "../ContentWrapper/ContentWrapper";
 // import Genres from "../genres/Genres";
+import axios from "axios";
 import Swal from "sweetalert2";
 import useAuth from "../../hooks/useAuth";
 import CircleRating from "../CircleRating/CircleRating";
@@ -22,6 +23,19 @@ const Carousel = ({ data, loading, endpoint, title }) => {
   const { url } = useSelector((state) => state.tmdb);
   const navigate = useNavigate();
   const {user} = useAuth()
+  const [currUser, setCurrUser] = useState({})
+
+
+  useEffect(() => {
+    if(user){
+      axios.get(`http://localhost:5000/userprofile/${user?.email}`)
+      .then(res => {
+        // console.log(res.data);
+        setCurrUser(res.data)
+      })
+    }
+  },[user])
+
 
   const navigation = (dir) => {
     const container = carouselContainer.current;
@@ -39,9 +53,7 @@ const Carousel = ({ data, loading, endpoint, title }) => {
 
 
 const handleNavigate = (item) => {
-  if(user && user?.email){
-    navigate(`/${item.media_type || endpoint}/${item.id}`) 
-  }else {
+  if(!user && !user?.email ){
     Swal.fire({
       title: "Please Login to watch movie",
       icon: "warning",
@@ -54,6 +66,22 @@ const handleNavigate = (item) => {
         navigate("/login");
       }
     });
+  }else if(currUser && currUser?.subscriptionStatus  !== "paid"){
+    Swal.fire({
+      title: "Please get a subscription and watch your favorite movie",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Subscription",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        navigate("/subscription");
+      }
+    });
+  }
+  else {
+    navigate(`/${item.media_type || endpoint}/${item.id}`) 
   }
 }
 

@@ -11,7 +11,7 @@ const useSave = () => {
         queryKey: ['favorites', user?.email],
         enabled: !loading,
         queryFn: async () => {
-            const response = await axiosSecure(`save/${user?.email}`)
+            const response = await axiosSecure(`/save/${user?.email}`)
             return response.data;
           },
       })

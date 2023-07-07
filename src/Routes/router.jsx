@@ -14,9 +14,11 @@ import ErrorPage from "../pages/ErrorPage/ErrorPage";
 import Explore from "../pages/Explore/Explore";
 import Home from "../pages/Home/Home/Home";
 import Login from "../pages/Login/Login";
+import Payment from "../pages/Payment/Payment";
 import SearchResult from "../pages/SearchResult/SearchResult";
 import Signup from "../pages/Signup/Signup";
 import Subscription from "../pages/Subscription/Subscription";
+import AdminRoute from "./AdminRoute";
 import PrivateRoute from "./PrivateRoute";
 
 const router = createBrowserRouter([
@@ -53,12 +55,19 @@ const router = createBrowserRouter([
         path: "/subscription",
         element: <Subscription />,
       },
+      
+      {
+        path: 'payment/:id',
+        element: <Payment />,
+        loader: ({params})=> fetch(`http://localhost:5000/subscription/${params.id}`)
+      },
     ],
   },
   {
     path: "/dashboard",
     element: <PrivateRoute><Dashboard /></PrivateRoute>,
     children: [
+      // User Dashboard
       {
         path: 'favoritevideos',
         element: <FavoriteVideos />
@@ -67,13 +76,14 @@ const router = createBrowserRouter([
         path: 'watchlater',
         element: <WatchLater />
       },
+      // Admin Dashboard
       {
         path: 'adminhome',
-        element: <AdminHome />
+        element: <AdminRoute><AdminHome /></AdminRoute>
       },
       {
         path: 'manageusers',
-        element: <ManageUsers />
+        element: <AdminRoute><ManageUsers /></AdminRoute>
       },
       {
         path: 'userprofile',

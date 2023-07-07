@@ -89,7 +89,7 @@ const Signup = () => {
               <input type="checkbox" name="remember" className="mr-1" />
               <label htmlFor="remember" className="text-sm text-white">Remember me</label>
             </div>
-            <button className="bg-gradient-to-r from-red-600 to-slate-950 block mx-auto text-white text-sm uppercase rounded shadow-md px-6 py-2">Sign Up</button>
+            <button className="bg-gradient-to-r from-red-600 to-slate-950 hover:from-pink-500 hover:to-yellow-500 block mx-auto text-white text-sm uppercase rounded shadow-md px-6 py-2">Sign Up</button>
           </div>
           </form>
           <p className="text-center text-red-500 pt-5">{showError && showError}</p>

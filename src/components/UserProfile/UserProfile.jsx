@@ -1,3 +1,4 @@
+import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import moment from "moment/moment";
 import React, { useEffect, useState } from "react";
@@ -7,10 +8,22 @@ import "react-medium-image-zoom/dist/styles.css";
 import { Link } from "react-router-dom";
 import useAdmin from "../../hooks/useAdmin";
 import useAuth from "../../hooks/useAuth";
+import useAxiosSecure from "../../hooks/useAxiosSecure";
 
 const UserProfile = () => {
   const [userProfile, setUserProfile] = useState({});
-  const { user } = useAuth();
+  const { user, loading } = useAuth();
+
+  const [axiosSecure] = useAxiosSecure()
+
+  const { data: payments=[], refetch  } = useQuery({
+      queryKey: ['payment', user?.email],
+      enabled: !loading,
+      queryFn: async () => {
+          const response = await axiosSecure(`/payment?email=${user?.email}`)
+          return response.data;
+        },
+    })
 
   useEffect(() => {
     if (user) {
@@ -27,6 +40,7 @@ const UserProfile = () => {
   const [isAdmin] = useAdmin();
 
   return (
+    <>
     <div className="h-screen flex-1 p-7">
       <div className="w-full  bg-slate-900 text-white my-10 ">
         <div className="shadow-lg">
@@ -136,7 +150,84 @@ const UserProfile = () => {
           </div>
         </div>
       </div>
+      <div className="-mx-4 sm:-mx-8 px-4 sm:px-8 py-4 overflow-x-auto">
+        <h3 className="text-white mb-5 text-2xl font-semibold">Payment History</h3>
+            <div className="inline-block min-w-full shadow rounded-lg overflow-hidden">
+              <table className="min-w-full leading-normal">
+                <thead className="">
+                  <tr>
+                    <th className="px-5 py-3 border-b-2 border-gray-600 bg-gray-800 text-left text-xs font-semibold text-gray-100 uppercase tracking-wider">
+                      Name
+                    </th>
+                    <th className="px-5 py-3 border-b-2 border-gray-600 bg-gray-800 text-left text-xs font-semibold text-gray-100 uppercase tracking-wider">
+                    Email
+                    </th>
+                    <th className="px-5 py-3 border-b-2 border-gray-600 bg-gray-800 text-left text-xs font-semibold text-gray-100 uppercase tracking-wider">
+                    Package Name
+                    </th>
+                    <th className="px-5 py-3 border-b-2 border-gray-600 bg-gray-800 text-left text-xs font-semibold text-gray-100 uppercase tracking-wider">
+                    Payment Date
+                    </th>
+                    <th className="px-5 py-3 border-b-2 border-gray-600 bg-gray-800 text-left text-xs font-semibold text-gray-100 uppercase tracking-wider">
+                    transaction Id
+                    </th>
+                    <th className="px-5 py-3 border-b-2 border-gray-600 bg-gray-800 text-left text-xs font-semibold text-gray-100 uppercase tracking-wider">
+                    Amount
+                    </th>
+                    <th className="px-5 py-3 border-b-2 border-gray-600 bg-gray-800 text-left text-xs font-semibold text-gray-100 uppercase tracking-wider">
+                      Status
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {
+                    payments.map(payment => <tr key={payment._id}>
+                      <td className="px-5 py-5 border-b border-gray-500 bg-gray-900 text-sm">
+                          <p className="text-white  whitespace-no-wrap">
+                            {payment?.name}
+                          </p>
+                        </td>
+                      <td className="px-5 py-5 border-b border-gray-500 bg-gray-900 text-sm">
+                          <p className="text-white  whitespace-no-wrap">
+                          {payment?.email}
+                          </p>
+                        </td>
+                      <td className="px-5 py-5 border-b border-gray-500 bg-gray-900 text-sm">
+                          <p className="text-white  whitespace-no-wrap">
+                          {payment?.package_name}
+                          </p>
+                        </td>
+                        <td className="px-5 py-5 border-b border-gray-500 bg-gray-900 text-sm">
+                          <p className=" whitespace-no-wrap text-white">
+                            { moment(payment?.date).format("DD MMMM, YYYY, h:mm a")}
+                          </p>
+                        </td>
+                        <td className="px-5 py-5 border-b border-gray-500 bg-gray-900 text-sm">
+                          <p className="text-white  whitespace-no-wrap">
+                          {payment?.transactionId}
+                          </p>
+                        </td>
+                        <td className="px-5 py-5 border-b border-gray-500 bg-gray-900 text-sm">
+                          <p className="text-white  whitespace-no-wrap">
+                          ${payment?.price}
+                          </p>
+                        </td>
+                        <td className="px-5 py-5 border-b border-gray-500 bg-gray-900 text-sm">
+                          <button  className="text-white px-2 bg-green-600 rounded-lg">
+                            Paid
+                          </button>
+                        </td>
+                      </tr>)
+                  }
+                    
+                </tbody>
+              </table>
+            </div>
+          </div>
     </div>
+
+    
+    </>
   );
 };
 
