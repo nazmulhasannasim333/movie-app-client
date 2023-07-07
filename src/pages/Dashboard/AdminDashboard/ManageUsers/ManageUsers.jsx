@@ -21,7 +21,7 @@ const ManageUsers = () => {
       confirmButtonText: "Yes, Make Admin",
     }).then((result) => {
       if (result.isConfirmed) {
-        axios.patch(`http://localhost:5000/users/admin/${user._id}`)
+        axios.patch(`https://movie-app-server-nazmulhasannasim333.vercel.app/users/admin/${user._id}`)
           .then((res) => {
             if (res.data.modifiedCount > 0) {
               refetch();
@@ -44,7 +44,7 @@ const ManageUsers = () => {
       confirmButtonText: 'Yes, delete it!'
     }).then((result) => {
       if (result.isConfirmed) {
-        axios.delete(`http://localhost:5000/user/${user._id}`)
+        axios.delete(`https://movie-app-server-nazmulhasannasim333.vercel.app/user/${user._id}`)
         .then(res => {
           if (res.data.deletedCount > 0) {
             refetch()

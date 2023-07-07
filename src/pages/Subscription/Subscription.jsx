@@ -19,7 +19,7 @@ const Subscription = () => {
 
   useEffect(() => {
     if(user){
-      axios.get(`http://localhost:5000/userprofile/${user?.email}`)
+      axios.get(`https://movie-app-server-nazmulhasannasim333.vercel.app/userprofile/${user?.email}`)
       .then(res => {
         // console.log(res.data);
         setCurrUser(res.data)
@@ -28,7 +28,7 @@ const Subscription = () => {
   },[user])
 
   useEffect(() => {
-    fetch('http://localhost:5000/subscriptions')
+    fetch('https://movie-app-server-nazmulhasannasim333.vercel.app/subscriptions')
     .then(res => res.json())
     .then(data => {
       console.log(data);

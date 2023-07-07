@@ -28,7 +28,7 @@ const Carousel = ({ data, loading, endpoint, title }) => {
 
   useEffect(() => {
     if(user){
-      axios.get(`http://localhost:5000/userprofile/${user?.email}`)
+      axios.get(`https://movie-app-server-nazmulhasannasim333.vercel.app/userprofile/${user?.email}`)
       .then(res => {
         // console.log(res.data);
         setCurrUser(res.data)

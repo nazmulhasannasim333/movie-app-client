@@ -21,7 +21,7 @@ const Signup = () => {
   const onSubmit = (data) => {
     console.log(data);
 
-    axios.post(`http://localhost:5000/users`, {
+    axios.post(`https://movie-app-server-nazmulhasannasim333.vercel.app/users`, {
       name: data.name,
       email: data.email,
       photo: "",

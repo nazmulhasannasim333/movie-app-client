@@ -23,7 +23,7 @@ const WatchLater = () => {
       confirmButtonText: 'Yes, delete it!'
     }).then((result) => {
       if (result.isConfirmed) {
-        axios.delete(`http://localhost:5000/save/${item._id}`)
+        axios.delete(`https://movie-app-server-nazmulhasannasim333.vercel.app/save/${item._id}`)
         .then(res => {
           if (res.data.deletedCount > 0) {
             refetch()

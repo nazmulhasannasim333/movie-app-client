@@ -1,8 +1,9 @@
 
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
+import axios from "axios";
 import moment from "moment";
 import Swal from "sweetalert2";
 import PosterFallback from "../../assets/no-poster.png";
@@ -17,11 +18,22 @@ const MovieCard = ({ data, fromSearch, mediaType }) => {
     const navigate = useNavigate();
     const {user} = useAuth()
 
+    const [currUser, setCurrUser] = useState({})
+
+
+    useEffect(() => {
+      if(user){
+        axios.get(`https://movie-app-server-nazmulhasannasim333.vercel.app/userprofile/${user?.email}`)
+        .then(res => {
+          // console.log(res.data);
+          setCurrUser(res.data)
+        })
+      }
+    },[user])
+
 
     const handleNavigate = (item) => {
-        if(user && user?.email){
-            navigate(`/${data.media_type || mediaType}/${data.id}`)
-        }else {
+        if(!user && !user?.email ){
           Swal.fire({
             title: "Please Login to watch movie",
             icon: "warning",
@@ -34,8 +46,28 @@ const MovieCard = ({ data, fromSearch, mediaType }) => {
               navigate("/login");
             }
           });
+        }else if(currUser && currUser?.subscriptionStatus  !== "paid"){
+          Swal.fire({
+            title: "Please get a subscription and watch your favorite movie",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Subscription",
+          }).then((result) => {
+            if (result.isConfirmed) {
+              navigate("/subscription");
+            }
+          });
+        }
+        else {
+            navigate(`/${data.media_type || mediaType}/${data.id}`)
         }
       }
+
+
+
+
 
 
 

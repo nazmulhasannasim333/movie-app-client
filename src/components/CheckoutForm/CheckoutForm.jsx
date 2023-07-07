@@ -77,7 +77,7 @@ const CheckoutForm = ({loadedSubcription}) => {
         if (paymentIntent.status === "succeeded") {
           setTransactionId(paymentIntent.id);
 
-          axios.patch(`http://localhost:5000/subscriptionStatus/${user?.email}`)
+          axios.patch(`https://movie-app-server-nazmulhasannasim333.vercel.app/subscriptionStatus/${user?.email}`)
           .then((res) => {
             if (res.data.modifiedCount > 0) {
               toast.success("status paid")

@@ -59,7 +59,7 @@ const router = createBrowserRouter([
       {
         path: 'payment/:id',
         element: <Payment />,
-        loader: ({params})=> fetch(`http://localhost:5000/subscription/${params.id}`)
+        loader: ({params})=> fetch(`https://movie-app-server-nazmulhasannasim333.vercel.app/subscription/${params.id}`)
       },
     ],
   },
@@ -93,7 +93,7 @@ const router = createBrowserRouter([
       {
         path: 'updateProfile/:id',
         element: <UserProfileUpdate />,
-        loader: ({params})=> fetch(`http://localhost:5000/getprofileinfo/${params.id}`)
+        loader: ({params})=> fetch(`https://movie-app-server-nazmulhasannasim333.vercel.app/getprofileinfo/${params.id}`)
       },
     ]
   },

@@ -40,7 +40,7 @@ const DetailsBanner = ({ video, crew }) => {
     vote_average
     } = favorite;
    
-    axios.post(`http://localhost:5000/favorite`, {
+    axios.post(`https://movie-app-server-nazmulhasannasim333.vercel.app/favorite`, {
       email: user?.email,
       adult,
       title,
@@ -75,7 +75,7 @@ const DetailsBanner = ({ video, crew }) => {
     vote_average
     } = saveMovie;
    
-    axios.post(`http://localhost:5000/save`, {
+    axios.post(`https://movie-app-server-nazmulhasannasim333.vercel.app/save`, {
       email: user?.email,
       adult,
       title,

@@ -87,7 +87,7 @@ const Header = () => {
 
   useEffect(() => {
     if(user){
-      axios.get(`http://localhost:5000/userprofile/${user?.email}`)
+      axios.get(`https://movie-app-server-nazmulhasannasim333.vercel.app/userprofile/${user?.email}`)
       .then(res => {
         // console.log(res.data);
         setUserProfile(res.data)

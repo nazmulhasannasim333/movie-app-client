@@ -39,7 +39,7 @@ const UserProfileUpdate = () => {
                     photo
                   } = data;
 
-                  axios.put(`http://localhost:5000/updateprofile/${loadUser._id}`, {
+                  axios.put(`https://movie-app-server-nazmulhasannasim333.vercel.app/updateprofile/${loadUser._id}`, {
                     address,
                     email,
                     gender,
