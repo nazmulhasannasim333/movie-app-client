@@ -46,7 +46,7 @@ const MovieCard = ({ data, fromSearch, mediaType }) => {
               navigate("/login");
             }
           });
-        }else if(currUser && currUser?.subscriptionStatus  !== "paid"){
+        }else if(currUser && currUser?.subscriptionStatus  !== "paid" && currUser?.role !== "admin"){
           Swal.fire({
             title: "Please get a subscription and watch your favorite movie",
             icon: "warning",

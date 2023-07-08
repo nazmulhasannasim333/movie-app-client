@@ -1,3 +1,4 @@
+import { useQuery } from "@tanstack/react-query";
 import moment from "moment";
 import { useEffect, useState } from "react";
 import { CircularProgressbar, buildStyles } from "react-circular-progressbar";
@@ -5,6 +6,8 @@ import "react-circular-progressbar/dist/styles.css";
 import { FaFunnelDollar, FaPlay, FaRegFolderOpen, FaUsers } from "react-icons/fa";
 import { useSelector } from "react-redux";
 import PosterFallback from "../../../../assets/no-poster.png";
+import useAuth from "../../../../hooks/useAuth";
+import useAxiosSecure from "../../../../hooks/useAxiosSecure";
 import useUsers from "../../../../hooks/useUsers";
 import { fetchDataFromApi } from "../../../../utils/api";
 
@@ -13,9 +16,27 @@ const AdminHome = () => {
   const [movies, setMovies] = useState([]);
   const { url } = useSelector((state) => state.tmdb);
   const [users, refetch] = useUsers()
-  console.log(movies);
-  console.log(url);
+  const {user, loading} = useAuth()
+  const [axiosSecure] = useAxiosSecure()
+  // console.log(movies);
+  // console.log(url);
 
+  const { data: allpayments=[]  } = useQuery({
+      queryKey: ['allpayment'],
+      enabled: !loading,
+      queryFn: async () => {
+          const response = await axiosSecure(`/allpayment`)
+          // console.log(response.data);
+          return response.data;
+        },
+    })
+    
+
+    const totalReveneu = allpayments?.reduce((acc, payment) => { 
+      return acc + payment.price
+    }, 0)
+    // console.log(totalReveneu);
+    
 
 
   useEffect(() => {
@@ -30,7 +51,7 @@ const AdminHome = () => {
   }, []);
 
   const movieAndTvShows = tvshows?.concat(movies)
-  console.log(movieAndTvShows);
+  // console.log(movieAndTvShows);
   
 
   return (
@@ -41,7 +62,7 @@ const AdminHome = () => {
             <div className="flex-shrink-0">
               <FaFunnelDollar className="font-bold text-3xl" />
               <span className="text-2xl sm:text-3xl leading-none font-bold ">
-                $546
+                ${totalReveneu}
               </span>
               <h3 className="text-base font-normal ">
                 Total Sale value this week
