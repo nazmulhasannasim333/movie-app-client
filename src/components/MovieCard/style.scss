@@ -21,7 +21,7 @@
     align-items: flex-end;
     justify-content: space-between;
     padding: 10px;
-    transition: all ease 0.5s;
+    transition: transform 0.4s ease;
     .lazy-load-image-background {
       position: absolute;
       top: 0;
@@ -36,6 +36,9 @@
         object-fit: cover;
         object-position: center;
       }
+    }
+    &:hover {
+      transform: scale(1.1);
     }
     .circleRating {
       width: 40px;
