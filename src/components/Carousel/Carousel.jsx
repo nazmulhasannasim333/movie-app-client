@@ -22,19 +22,19 @@ const Carousel = ({ data, loading, endpoint, title }) => {
   const carouselContainer = useRef();
   const { url } = useSelector((state) => state.tmdb);
   const navigate = useNavigate();
-  const {user} = useAuth()
-  const [currUser, setCurrUser] = useState({})
+  // const {user} = useAuth()
+  // const [currUser, setCurrUser] = useState({})
 
 
-  useEffect(() => {
-    if(user){
-      axios.get(`https://movie-app-server-nazmulhasannasim333.vercel.app/userprofile/${user?.email}`)
-      .then(res => {
-        // console.log(res.data);
-        setCurrUser(res.data)
-      })
-    }
-  },[user])
+  // useEffect(() => {
+  //   if(user){
+  //     axios.get(`https://movie-app-server-nazmulhasannasim333.vercel.app/userprofile/${user?.email}`)
+  //     .then(res => {
+  //       // console.log(res.data);
+  //       setCurrUser(res.data)
+  //     })
+  //   }
+  // },[user])
 
 
   const navigation = (dir) => {
@@ -53,36 +53,37 @@ const Carousel = ({ data, loading, endpoint, title }) => {
 
 
 const handleNavigate = (item) => {
-  if(!user && !user?.email ){
-    Swal.fire({
-      title: "Please Login to watch movie",
-      icon: "warning",
-      showCancelButton: true,
-      confirmButtonColor: "#3085d6",
-      cancelButtonColor: "#d33",
-      confirmButtonText: "Sign In",
-    }).then((result) => {
-      if (result.isConfirmed) {
-        navigate("/login");
-      }
-    });
-  }else if(currUser && currUser?.subscriptionStatus  !== "paid" && currUser?.role !== "admin"){
-    Swal.fire({
-      title: "Please get a subscription and watch your favorite movie",
-      icon: "warning",
-      showCancelButton: true,
-      confirmButtonColor: "#3085d6",
-      cancelButtonColor: "#d33",
-      confirmButtonText: "Subscription",
-    }).then((result) => {
-      if (result.isConfirmed) {
-        navigate("/subscription");
-      }
-    });
-  }
-  else {
-    navigate(`/${item.media_type || endpoint}/${item.id}`) 
-  }
+  navigate(`/${item.media_type || endpoint}/${item.id}`) 
+  // if(!user && !user?.email ){
+  //   Swal.fire({
+  //     title: "Please Login to watch movie",
+  //     icon: "warning",
+  //     showCancelButton: true,
+  //     confirmButtonColor: "#3085d6",
+  //     cancelButtonColor: "#d33",
+  //     confirmButtonText: "Sign In",
+  //   }).then((result) => {
+  //     if (result.isConfirmed) {
+  //       navigate("/login");
+  //     }
+  //   });
+  // }else if(currUser && currUser?.subscriptionStatus  !== "paid" && currUser?.role !== "admin"){
+  //   Swal.fire({
+  //     title: "Please get a subscription and watch your favorite movie",
+  //     icon: "warning",
+  //     showCancelButton: true,
+  //     confirmButtonColor: "#3085d6",
+  //     cancelButtonColor: "#d33",
+  //     confirmButtonText: "Subscription",
+  //   }).then((result) => {
+  //     if (result.isConfirmed) {
+  //       navigate("/subscription");
+  //     }
+  //   });
+  // }
+  // else {
+  //   navigate(`/${item.media_type || endpoint}/${item.id}`) 
+  // }
 }
 
 

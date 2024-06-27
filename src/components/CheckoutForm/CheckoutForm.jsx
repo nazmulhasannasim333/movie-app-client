@@ -54,7 +54,7 @@ const CheckoutForm = ({loadedSubcription}) => {
           setCardError(error.message);
         } else {
           setCardError("");
-          console.log("[PaymentMethod]", paymentMethod);
+          // console.log("[PaymentMethod]", paymentMethod);
         }
     
         setProcessing(true);

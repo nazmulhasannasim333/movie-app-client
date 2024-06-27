@@ -26,7 +26,6 @@ const DetailsBanner = ({ video, crew }) => {
   const { data, loading } = useFetch(`/${mediaType}/${id}`);
   const { url } = useSelector((state) => state.tmdb);
   const {user} = useAuth()
-  console.log(data);
 
   const handleFavorite = (favorite) => {
     const {

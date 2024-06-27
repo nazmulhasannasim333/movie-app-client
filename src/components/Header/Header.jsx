@@ -24,6 +24,8 @@ const Header = () => {
   const { user, logout } = useAuth();
   const [userProfile, setUserProfile] = useState({})
 
+  console.log(query);
+
  
   const handleSignout = () => {
     logout()
@@ -97,7 +99,6 @@ const Header = () => {
 
   
 const [isAdmin] = useAdmin();
-console.log(isAdmin);
 
 
   return (
@@ -111,7 +112,7 @@ console.log(isAdmin);
           <div className="hidden lg:block md:block">
             <input
               className="border-b border-gray-300 mx-5 focus:border-gray-300 outline-none py-3 ps-2 lg:w-[350px] md:w-56 bg-black bg-opacity-0 text-white"
-              type="text"
+              type="search"
               placeholder="Search for a movie or tv show....."
               onChange={(e) => setQuery(e.target.value)}
               onKeyUp={searchQueryHandler}
@@ -198,7 +199,7 @@ console.log(isAdmin);
           <ContentWrapper>
             <div className="searchInput">
               <input
-                type="text"
+                type="search"
                 placeholder="Search for a movie or tv show...."
                 onChange={(e) => setQuery(e.target.value)}
                 onKeyUp={searchQueryHandler}

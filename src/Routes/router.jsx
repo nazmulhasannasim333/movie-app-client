@@ -33,7 +33,7 @@ const router = createBrowserRouter([
       },
       {
         path: "/:mediaType/:id",
-        element: <PrivateRoute><Details /></PrivateRoute>,
+        element: <Details />,
       },
       {
         path: "/search/:query",
